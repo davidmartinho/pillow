@@ -21,35 +21,39 @@ then
     exit 1
 fi
 
-echo "Updating your system..."
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y autoremove
+echo "[Pillow] Updating your system..."
+sudo apt-get -y -qq update
+echo "[Pillow] Upgrading your system...(this may take a while)"
+sudo apt-get -y -qq upgrade
+echo "[Pillow] Cleaning up unnecessary software..."
+sudo apt-get -y -qq autoremove
+
 echo "Now relax and go grab yourself a cup of coffee or a cold beer."
 echo "When your system is ready, Pillow will let you know!"
+echo ""
 
-echo "Installing Git..."
+echo "[Pillow] Installing Git..."
 sudo apt-get -y install git
-echo "Configuring Git..."
+echo "[Pillow] Configuring Git..."
 git config --global user.name="$NAME"
 git config --global user.email="$EMAIL"
 
-echo "Installing MySQL..."
-sudo apt-get -y install mysql-client mysql-server
+echo "[Pillow] Installing MySQL..."
+sudo apt-get -y install mysql-client
 
-echo "Downloading Oracle's JDK 7..."
+echo "[Pillow] Downloading Oracle's JDK 7..."
 wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" "http://download.oracle.com/otn-pub/java/jdk/7u40-b43/jdk-7u40-linux-x64.tar.gz"
 
-echo "Installing Oracle's JDK 7..."
+echo "[Pillow] Installing Oracle's JDK 7..."
 tar -xf jdk-7u40-linux-x64.tar.gz
 sudo mkdir -p /usr/lib/jvm
 sudo mv jdk1.7.0_40 /usr/lib/jvm/oracle-jdk-7
 
-sudo sh -c "echo '\n' >> /etc/profile"
-sudo sh -c "echo 'JAVA_HOME=/usr/lib/jvm/oracle-jdk-7' >> /etc/profile"
-sudo sh -c "echo 'PATH=$PATH:$HOME/bin:$JAVA_HOME/bin' >> /etc/profile"
-sudo sh -c "echo 'export JAVA_HOME' >> /etc/profile"
-sudo sh -c "echo 'export PATH' >> /etc/profile"
+sudo sh -c "echo '\n' >> ~/.bashrc"
+sudo sh -c "echo 'JAVA_HOME=/usr/lib/jvm/oracle-jdk-7' >> ~/.bashrc"
+sudo sh -c "echo 'PATH=$PATH:$HOME/bin:$JAVA_HOME/bin' >> ~/.bashrc"
+sudo sh -c "echo 'export JAVA_HOME' >> ~/.bashrc"
+sudo sh -c "echo 'export PATH' >> ~/.bashrc"
 
 sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/oracle-jdk-7/jre/bin/java" 1
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/oracle-jdk-7/bin/javac" 1
@@ -59,29 +63,29 @@ sudo update-alternatives --set java /usr/lib/jvm/oracle-jdk-7/jre/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/oracle-jdk-7/bin/javac
 sudo update-alternatives --set javaws /usr/lib/jvm/oracle-jdk-7/bin/javaws
 
-sudo sh -c "echo 'JAVA_OPTS=\"-server -Xms256m -Xmx1024m -XX:PermSize=384m\"' >> /etc/profile"
-sudo sh -c "echo 'export JAVA_OPTS' >> /etc/profile"
+sudo sh -c "echo 'JAVA_OPTS=\"-server -Xms256m -Xmx1024m -XX:PermSize=384m\"' >> ~/.bashrc"
+sudo sh -c "echo 'export JAVA_OPTS' >> ~/.bashrc"
 
-echo "Installing Maven..."
+echo "[Pillow] Installing Maven..."
 sudo apt-get -y install maven
 
-echo "Configuring Maven..."
-sudo sh -c "echo 'MAVEN_OPTS=$JAVA_OPTS' >> /etc/profile"
-sudo sh -c "echo 'export MAVEN_OPTS' >> /etc/profile"
+echo "[Pillow] Configuring Maven..."
+sudo sh -c "echo 'MAVEN_OPTS=\$JAVA_OPTS' >> ~/.bashrc"
+sudo sh -c "echo 'export MAVEN_OPTS' >> ~/.bashrc"
 
-source /etc/profile
+source .bashrc
 
-echo "Downloading Eclipse IDE..."
+echo "[Pillow] Downloading Eclipse IDE..."
 wget http://eclipse.dcc.fc.up.pt/technology/epp/downloads/release/kepler/SR1/eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
 
-echo "Installing Eclipse IDE..."
+echo "[Pillow] Installing Eclipse IDE..."
 tar -xf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
 mkdir -p software
 
 wget https://raw.github.com/FenixEdu/fenix/master/EclipseFenixCodeSyle.xml
 mv EclipseFenixCodeSyle.xml eclipse/
 
-echo "Setting up your workspace..."
+echo "[Pillow] Setting up your workspace..."
 mkdir -p workspace
 cd workspace
 wget https://raw.github.com/davidmartinho/pillow/develop/eclipse-workspace-metadata.tar.gz
