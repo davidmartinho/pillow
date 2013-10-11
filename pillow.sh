@@ -8,10 +8,8 @@ echo "  _____ _____ _      _      ______          __
  |_|   |_____|______|______\____/   \/  \/
 "
 
-echo "Please enter your first and last names (e.g. John Doe):"
-read NAME
-echo "Now please tell us the email your registered with Github:"
-read EMAIL
+read -ep "Please enter your first and last names (e.g. John Doe):" NAME
+read -ep "Now please tell us the email your registered with Github:" EMAIL
 echo "PILLOW WILL PREPARE YOUR SYSTEM AND INSTALL NECESSARY SOFTWARE FOR YOU!"
 read -p "Are you sure you want this? (Y/N) " -r
 
@@ -35,8 +33,8 @@ echo ""
 echo "[Pillow] Installing Git..."
 sudo apt-get -y -qq install git
 echo "[Pillow] Configuring Git..."
-git config --global user.name=\"$NAME\"
-git config --global user.email="$EMAIL"
+git config --global user.name "$NAME"
+git config --global user.email "$EMAIL"
 
 echo "[Pillow] Installing MySQL..."
 sudo apt-get -y -qq install mysql-client
@@ -84,8 +82,10 @@ tar -xf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
 rm -rf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
 mkdir -p software
 
+mv eclipse software
+
 wget https://raw.github.com/FenixEdu/fenix/master/EclipseFenixCodeSyle.xml
-mv EclipseFenixCodeSyle.xml eclipse/
+mv EclipseFenixCodeSyle.xml software/eclipse/
 
 echo "[Pillow] Setting up your workspace..."
 mkdir -p workspace
@@ -95,15 +95,13 @@ tar -xf eclipse-workspace-metadata.tar.gz
 rm -rf eclipse-workspace-metadata.tar.gz
 cd ..
 
-mkdir -p eclipse/configuration/.settings
-touch eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-echo "MAX_RECENT_WORKSPACES=5" >> eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-echo "RECENT_WORKSPACES=$HOME/workspace" >> eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-echo "RECENT_WORKSPACES_PROTOCOL=3" >> eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-echo "SHOW_WORKSPACE_SELECTION_DIALOG=false" >> eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-echo "eclipse.preferences.version=1" >> eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
-
-mv eclipse software
+mkdir -p software/eclipse/configuration/.settings
+touch software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo "MAX_RECENT_WORKSPACES=5" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo "RECENT_WORKSPACES=$HOME/workspace" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo "RECENT_WORKSPACES_PROTOCOL=3" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo "SHOW_WORKSPACE_SELECTION_DIALOG=false" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+echo "eclipse.preferences.version=1" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 
 echo "Congratulations!"
 echo "Pillow has now finished setting up your system for development!"
