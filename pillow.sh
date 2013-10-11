@@ -33,19 +33,20 @@ echo "When your system is ready, Pillow will let you know!"
 echo ""
 
 echo "[Pillow] Installing Git..."
-sudo apt-get -y install git
+sudo apt-get -y -qq install git
 echo "[Pillow] Configuring Git..."
-git config --global user.name="$NAME"
+git config --global user.name=\"$NAME\"
 git config --global user.email="$EMAIL"
 
 echo "[Pillow] Installing MySQL..."
-sudo apt-get -y install mysql-client
+sudo apt-get -y -qq install mysql-client
 
 echo "[Pillow] Downloading Oracle's JDK 7..."
 wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" "http://download.oracle.com/otn-pub/java/jdk/7u40-b43/jdk-7u40-linux-x64.tar.gz"
 
 echo "[Pillow] Installing Oracle's JDK 7..."
 tar -xf jdk-7u40-linux-x64.tar.gz
+rm -rf jdk-7u40-linux-x64.tar.gz
 sudo mkdir -p /usr/lib/jvm
 sudo mv jdk1.7.0_40 /usr/lib/jvm/oracle-jdk-7
 
@@ -67,7 +68,7 @@ sudo sh -c "echo 'JAVA_OPTS=\"-server -Xms256m -Xmx1024m -XX:PermSize=384m\"' >>
 sudo sh -c "echo 'export JAVA_OPTS' >> ~/.bashrc"
 
 echo "[Pillow] Installing Maven..."
-sudo apt-get -y install maven
+sudo apt-get -y -qq install maven
 
 echo "[Pillow] Configuring Maven..."
 sudo sh -c "echo 'MAVEN_OPTS=\$JAVA_OPTS' >> ~/.bashrc"
@@ -80,6 +81,7 @@ wget http://eclipse.dcc.fc.up.pt/technology/epp/downloads/release/kepler/SR1/ecl
 
 echo "[Pillow] Installing Eclipse IDE..."
 tar -xf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
+rm -rf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
 mkdir -p software
 
 wget https://raw.github.com/FenixEdu/fenix/master/EclipseFenixCodeSyle.xml
