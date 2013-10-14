@@ -48,11 +48,11 @@ rm -rf jdk-7u40-linux-x64.tar.gz
 sudo mkdir -p /usr/lib/jvm
 sudo mv jdk1.7.0_40 /usr/lib/jvm/oracle-jdk-7
 
-sudo sh -c "echo '\n' >> ~/.bashrc"
-sudo sh -c "echo 'JAVA_HOME=/usr/lib/jvm/oracle-jdk-7' >> ~/.bashrc"
-sudo sh -c "echo 'PATH=$PATH:$HOME/bin:$JAVA_HOME/bin' >> ~/.bashrc"
-sudo sh -c "echo 'export JAVA_HOME' >> ~/.bashrc"
-sudo sh -c "echo 'export PATH' >> ~/.bashrc"
+sudo sh -c "echo '\n' >> .bashrc"
+sudo sh -c "echo 'JAVA_HOME=/usr/lib/jvm/oracle-jdk-7' >> .bashrc"
+sudo sh -c "echo 'PATH=$PATH:$HOME/bin:$JAVA_HOME/bin' >> .bashrc"
+sudo sh -c "echo 'export JAVA_HOME' >> .bashrc"
+sudo sh -c "echo 'export PATH' >> .bashrc"
 
 sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/oracle-jdk-7/jre/bin/java" 1
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/oracle-jdk-7/bin/javac" 1
@@ -62,24 +62,22 @@ sudo update-alternatives --set java /usr/lib/jvm/oracle-jdk-7/jre/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/oracle-jdk-7/bin/javac
 sudo update-alternatives --set javaws /usr/lib/jvm/oracle-jdk-7/bin/javaws
 
-sudo sh -c "echo 'JAVA_OPTS=\"-server -Xms256m -Xmx1024m -XX:PermSize=384m\"' >> ~/.bashrc"
-sudo sh -c "echo 'export JAVA_OPTS' >> ~/.bashrc"
+sudo sh -c "echo 'JAVA_OPTS=\"-server -Xms256m -Xmx1024m -XX:PermSize=384m\"' >> .bashrc"
+sudo sh -c "echo 'export JAVA_OPTS' >> .bashrc"
 
 echo "[Pillow] Installing Maven..."
 sudo apt-get -y -qq install maven
 
 echo "[Pillow] Configuring Maven..."
-sudo sh -c "echo 'MAVEN_OPTS=\$JAVA_OPTS' >> ~/.bashrc"
-sudo sh -c "echo 'export MAVEN_OPTS' >> ~/.bashrc"
-
-source .bashrc
+sudo sh -c "echo 'MAVEN_OPTS=\$JAVA_OPTS' >> .bashrc"
+sudo sh -c "echo 'export MAVEN_OPTS' >> .bashrc"
 
 echo "[Pillow] Downloading Eclipse IDE..."
-wget http://eclipse.dcc.fc.up.pt/technology/epp/downloads/release/kepler/SR1/eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
+wget http://eclipse.dcc.fc.up.pt/technology/epp/downloads/release/kepler/SR1/eclipse-java-kepler-SR1-linux-gtk-x86_64.tar.gz
 
 echo "[Pillow] Installing Eclipse IDE..."
-tar -xf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
-rm -rf eclipse-standard-kepler-SR1-linux-gtk-x86_64.tar.gz
+tar -xf eclipse-java-kepler-SR1-linux-gtk-x86_64.tar.gz
+rm -rf eclipse-java-kepler-SR1-linux-gtk-x86_64.tar.gz
 mkdir -p software
 
 mv eclipse software
@@ -89,7 +87,6 @@ mv EclipseFenixCodeSyle.xml software/eclipse/
 
 echo "[Pillow] Setting up your workspace..."
 mkdir -p workspace
-chown -R $SUDO_USER:$SUDO_USER workspace
 cd workspace
 wget https://raw.github.com/davidmartinho/pillow/develop/eclipse-workspace-metadata.tar.gz
 tar -xf eclipse-workspace-metadata.tar.gz
@@ -97,13 +94,14 @@ rm -rf eclipse-workspace-metadata.tar.gz
 cd ..
 
 mkdir -p software/eclipse/configuration/.settings
-chown -R $SUDO_USER:$SUDO_USER software
 touch software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "MAX_RECENT_WORKSPACES=5" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "RECENT_WORKSPACES=$HOME/workspace" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "RECENT_WORKSPACES_PROTOCOL=3" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "SHOW_WORKSPACE_SELECTION_DIALOG=false" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "eclipse.preferences.version=1" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
+
+chown -R $SUDO_USER:$SUDO_USER .
 
 echo "Congratulations!"
 echo "Pillow has now finished setting up your system for development!"
