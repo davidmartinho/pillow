@@ -89,6 +89,7 @@ mv EclipseFenixCodeSyle.xml software/eclipse/
 
 echo "[Pillow] Setting up your workspace..."
 mkdir -p workspace
+chown -R $SUDO_USER:$SUDO_USER workspace
 cd workspace
 wget https://raw.github.com/davidmartinho/pillow/develop/eclipse-workspace-metadata.tar.gz
 tar -xf eclipse-workspace-metadata.tar.gz
@@ -96,6 +97,7 @@ rm -rf eclipse-workspace-metadata.tar.gz
 cd ..
 
 mkdir -p software/eclipse/configuration/.settings
+chown -R $SUDO_USER:$SUDO_USER software
 touch software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "MAX_RECENT_WORKSPACES=5" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "RECENT_WORKSPACES=$HOME/workspace" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
