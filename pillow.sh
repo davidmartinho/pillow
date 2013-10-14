@@ -101,7 +101,9 @@ echo "RECENT_WORKSPACES_PROTOCOL=3" >> software/eclipse/configuration/.settings/
 echo "SHOW_WORKSPACE_SELECTION_DIALOG=false" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 echo "eclipse.preferences.version=1" >> software/eclipse/configuration/.settings/org.eclipse.ui.ide.prefs
 
-chown -R $SUDO_USER:$SUDO_USER .
+chown -R $SUDO_USER:$SUDO_USER .bashrc
+chown -R $SUDO_USER:$SUDO_USER workspace
+chown -R $SUDO_USER:$SUDO_USER software
 
 echo "Congratulations!"
 echo "Pillow has now finished setting up your system for development!"
